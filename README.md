@@ -1,99 +1,111 @@
-# 🧠 Introduction to Model Context Protocol (MCP) — Certification & Practical Implementation
+# MCP Chat
 
-This repository documents my learning, hands-on work, and certification progress for **Anthropic’s “Introduction to Model Context Protocol (MCP)”** course.  
-The MCP framework enables developers to build powerful AI-integrated applications by connecting Claude to tools, resources, and workflows.
+MCP Chat is a command-line interface application that enables interactive chat capabilities with AI models through the Anthropic API. The application supports document retrieval, command-based prompts, and extensible tool integrations via the MCP (Model Control Protocol) architecture.
 
----
+## Prerequisites
 
-## 📜 Certification
+- Python 3.9+
+- Anthropic API Key
 
-I successfully completed the **Introduction to Model Context Protocol (MCP)** certification by Anthropic.
+## Setup
 
-**Certificate:**  
-https://verify.skilljar.com/c/p9o2zutfjdkm
+### Step 1: Configure the environment variables
 
----
+1. Create or edit the `.env` file in the project root and verify that the following variables are set correctly:
 
-## 🔍 What I Learned
+```
+ANTHROPIC_API_KEY=""  # Enter your Anthropic API secret key
+```
 
-### ✔ MCP Server Primitives
+### Step 2: Install dependencies
 
-#### **1. Tools — Model-Controlled**
-Tools allow Claude to autonomously perform actions.  
-Used for extending the model’s abilities, such as executing code, retrieving data, or performing custom operations.
+#### Option 1: Setup with uv (Recommended)
 
-#### **2. Resources — App-Controlled**
-Resources are fetched and managed by the application.  
-They are perfect for:
-- Populating UI elements  
-- Retrieving data  
-- Adding context to model conversations  
+[uv](https://github.com/astral-sh/uv) is a fast Python package installer and resolver.
 
-#### **3. Prompts — User-Controlled**
-Prompts are predefined workflows triggered by the user through:
-- Buttons  
-- Slash commands  
-- Menu options  
+1. Install uv, if not already installed:
 
----
+```bash
+pip install uv
+```
 
-## 🛠 Practical Skills Gained
+2. Create and activate a virtual environment:
 
-- Built a **working MCP server** from scratch  
-- Used **MCP Inspector** to connect, inspect, debug, and validate server behavior  
-- Understood how Claude interacts with:
-  - Tools  
-  - Resources  
-  - Prompts  
-- Learned how MCP powers real features like:
-  - Workflow automation  
-  - Document/context injection  
-  - Application-integrated model actions  
+```bash
+uv venv
+source .venv/bin/activate  # On Windows: .venv\Scripts\activate
+```
 
----
+3. Install dependencies:
 
-## 🧪 MCP Inspector Setup & Usage
+```bash
+uv pip install -e .
+```
 
-I used **MCP Inspector** to:
+4. Run the project
 
-- Validate server configuration  
-- Monitor tool/resource/prompt registration  
-- Test tool invocations  
-- View live server logs and responses  
+```bash
+uv run main.py
+```
 
-This helped me understand the full request–response flow inside an MCP environment.
+#### Option 2: Setup without uv
 
+1. Create and activate a virtual environment:
 
-## 🚀 Technologies & Tools Used
+```bash
+python -m venv .venv
+source .venv/bin/activate  # On Windows: .venv\Scripts\activate
+```
 
-- Anthropic Claude  
-- Model Context Protocol (MCP)  
-- MCP Inspector  
-- Python / JavaScript  
-- JSON, YAML  
-- Git & GitHub  
+2. Install dependencies:
 
----
+```bash
+pip install anthropic python-dotenv prompt-toolkit "mcp[cli]==1.8.0"
+```
 
-## 📂 Repository Structure
+3. Run the project
 
-*(Adjust according to your actual project files.)*
+```bash
+python main.py
+```
 
----
+## Usage
 
-## 💡 Future Enhancements
+### Basic Interaction
 
-- Add more custom tools to expand Claude’s capabilities  
-- Integrate external APIs using MCP tools  
-- Build UI workflows using Prompts  
-- Create a starter template for MCP developers  
+Simply type your message and press Enter to chat with the model.
 
----
+### Document Retrieval
 
-## 🎉 Closing Note
+Use the @ symbol followed by a document ID to include document content in your query:
 
-This project marks my first step into deeper **AI engineering** using Anthropic’s MCP ecosystem.  
-Excited to continue learning, building, and sharing more MCP-powered applications!
+```
+> Tell me about @deposition.md
+```
 
+### Commands
 
+Use the / prefix to execute commands defined in the MCP server:
 
+```
+> /summarize deposition.md
+```
+
+Commands will auto-complete when you press Tab.
+
+## Development
+
+### Adding New Documents
+
+Edit the `mcp_server.py` file to add new documents to the `docs` dictionary.
+
+### Implementing MCP Features
+
+To fully implement the MCP features:
+
+1. Complete the TODOs in `mcp_server.py`
+2. Implement the missing functionality in `mcp_client.py`
+
+### Linting and Typing Check
+
+There are no lint or type checks implemented.
